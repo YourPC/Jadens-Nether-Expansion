@@ -159,17 +159,17 @@ public class PumpChargeShotgunItem extends ProjectileWeaponItem implements Vanis
 
     public void performShooting(Level level, LivingEntity user, ItemStack stack) {
         int chargeCount = getCharge(stack) * 6;
-        int chargeInaccuracy = getCharge(stack) * 8;
+        int chargeInaccuracy = getCharge(stack) * 4;
         int recoil = EnchantmentHelper.getItemEnchantmentLevel(JNEEnchantments.RECOIL.get(), stack);
         int artemis = EnchantmentHelper.getItemEnchantmentLevel(JNEEnchantments.ARTEMIS.get(), stack);
         // Bonuses
-        int aBulletDistanceBonus = artemis / 5;
+        int aBulletDistanceBonus = artemis / 2;
         double recoilPushBonus = (double) recoil / 16;
         double chargePushBonus = (double) getCharge(stack) / 10;
 
         Vec3 look = user.getLookAngle();
         Vec3 pushBack = new Vec3(-look.x, -look.y, -look.z).normalize();
-        int maxCount = 4 + chargeCount;
+        int maxCount = 20 + chargeCount * 10;
         int minCount = Math.max(1, (4 + (getCharge(stack) / 2)));
         int count = Math.max(minCount, maxCount);
         if (!level.isClientSide) {
@@ -197,7 +197,7 @@ public class PumpChargeShotgunItem extends ProjectileWeaponItem implements Vanis
 
     @Override
     public int getDefaultProjectileRange() {
-        return 15;
+        return 50;
     }
 
     public static int getCharge(ItemStack stack) {
